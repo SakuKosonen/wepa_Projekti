@@ -13,7 +13,7 @@
         <ul>
             <li th:each="picture: ${pictures}">
 
-                <img th:src="@{/gifs/{id}/content(id=${picture)}}"/>
+              
                 
 
                 <span th:text="${'Description: ' + picture.description + ' Likes: ' + picture.likes} "></span>
