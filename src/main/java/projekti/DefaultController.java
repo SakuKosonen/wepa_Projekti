@@ -10,6 +10,10 @@ public class DefaultController {
     @GetMapping("*")
     public String helloWorld(Model model) {
         model.addAttribute("message", "World!");
+        Account sepe = new Account();
+        
         return "index";
+        
+        
     }
 }
