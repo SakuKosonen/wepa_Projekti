@@ -20,17 +20,17 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @AllArgsConstructor
 @Data
 public class Account extends AbstractPersistable<Long> {
-    
-   
-    private String username;    
-  //  private String jotain;
+
+    private String username;
+    //  private String jotain;
     private String password;
     
+    @OneToMany(mappedBy = "account")
+    private List<wallText> wallTexts;
     
+    @OneToMany(mappedBy = "owner")
+    private List<Picture> pictures;
 
-    // private Picture profilePicture;
-    // private List<Picture> Pictures;
-    
     @OneToMany(mappedBy = "theFriend")
     private List<Friend> friends = new ArrayList();
 
@@ -39,12 +39,13 @@ public class Account extends AbstractPersistable<Long> {
 
     @OneToMany(mappedBy = "sentFrom")
     private List<Request> receivedRequests = new ArrayList();
-    
+
     public Account(String username, String password) {
         this.username = username;
         this.password = password;
         this.friends = new ArrayList();
-    } 
+    }
+
     public void addFriend(Friend username) {
         friends.add(username);
     }
@@ -67,5 +68,37 @@ public class Account extends AbstractPersistable<Long> {
 
     public void removeReceivedFriendRequest(Request request) {
         receivedRequests.remove(request);
+    }
+
+    public Picture getProfilePicture() {
+        if (pictures.isEmpty()) {
+            return new Picture();
+        }
+        for (Picture picture : pictures) {
+            if (picture.getIsProfilePicture()) {
+                return picture;
+            }
+        }
+        return pictures.get(0);
+    }
+
+    public boolean areFriends(Account account1) {
+        boolean eka = false;
+        boolean toka = false;
+        for (Friend friend : friends) {
+            if (friend.getFriendUsername().equals(account1.username)) {
+                eka = true;
+            }
+        }
+        for (Friend friend : account1.getFriends()) {
+            if (friend.getFriendUsername().equals(username)) {
+                toka = true;
+            }
+        }
+        if (toka && eka) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

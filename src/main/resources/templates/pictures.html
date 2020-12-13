@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Album</title>
+    </head>
+    <body>
+
+        <h1 th:text="${'Käyttäjän ' + user + ' albumi'}">Idiot</h1>
+
+
+
+        <ul>
+            <li th:each="picture: ${pictures}">
+
+                <img th:src="@{/gifs/{id}/content(id=${picture)}}"/>
+                
+
+                <span th:text="${'Description: ' + picture.description + ' Likes: ' + picture.likes} "></span>
+            </li>
+        </ul>
+
+        <h2>Add new picture</h2>
+
+        <form method="POST" th:action="@{/pictures}" enctype="multipart/form-data">
+            <input type="file" name="file" id="file"/>
+            <input type="text" name="description" />
+            <input type="submit" value="Add!"/>
+        </form>
+
+
+    </body>
+</html>
