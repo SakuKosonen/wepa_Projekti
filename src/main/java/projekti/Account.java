@@ -31,7 +31,8 @@ public class Account extends AbstractPersistable<Long> {
     // private Picture profilePicture;
     // private List<Picture> Pictures;
     
-    private List<String> friends = new ArrayList();
+    @OneToMany(mappedBy = "theFriend")
+    private List<Friend> friends = new ArrayList();
 
     @OneToMany(mappedBy = "sentTo")
     private List<Request> sentRequests = new ArrayList();
@@ -42,13 +43,13 @@ public class Account extends AbstractPersistable<Long> {
     public Account(String username, String password) {
         this.username = username;
         this.password = password;
-        
+        this.friends = new ArrayList();
     } 
-    public void addFriend(String username) {
+    public void addFriend(Friend username) {
         friends.add(username);
     }
 
-    public void removeFriend(String username) {
+    public void removeFriend(Friend username) {
         friends.remove(username);
     }
 
